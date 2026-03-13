@@ -37,7 +37,8 @@ export default function Semana() {
       <h1 style={{ fontSize:22, fontWeight:700, letterSpacing:'-0.02em', marginBottom:4 }}>Semana</h1>
       <p style={{ fontSize:12, color:'var(--text3)', marginBottom:20 }}>Grade semanal — a partir de 16/03/2026</p>
 
-      <div style={{ background:'var(--bg2)', border:'1px solid var(--border)', borderRadius:10, overflow:'hidden', marginBottom:16 }}>
+      <div style={{ overflowX:'auto', WebkitOverflowScrolling:'touch' }}>
+      <div style={{ background:'var(--bg2)', border:'1px solid var(--border)', borderRadius:10, overflow:'hidden', marginBottom:16, minWidth:520 }}>
         {/* Header */}
         <div style={{ display:'grid', gridTemplateColumns:'70px repeat(6,1fr)', background:'var(--bg3)' }}>
           <div style={{ padding:'10px 8px', fontSize:11, color:'var(--text3)', fontWeight:600 }}>Horário</div>
@@ -59,6 +60,7 @@ export default function Semana() {
             ))}
           </div>
         ))}
+      </div>
       </div>
 
       {/* Legend */}

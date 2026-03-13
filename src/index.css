@@ -43,3 +43,39 @@ input, select { font-family: var(--font); }
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
 
 .page-enter { animation: fadeIn 0.2s ease; }
+
+/* ── Responsividade mobile ─────────────────────────────────── */
+@media (max-width: 768px) {
+  .desktop-layout { display: none !important; }
+  .mobile-layout  { display: flex !important; }
+}
+
+@media (min-width: 769px) {
+  .desktop-layout { display: flex !important; }
+  .mobile-layout  { display: none !important; }
+}
+
+/* Grids do Dashboard no mobile */
+@media (max-width: 768px) {
+  /* Métricas: 2 colunas em vez de 4 */
+  .mobile-layout [style*="repeat(4,1fr)"],
+  .mobile-layout [style*="repeat(4, 1fr)"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Grid de 2 colunas vira 1 coluna */
+  .mobile-layout [style*="1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Grid de 3 colunas vira 1 coluna */
+  .mobile-layout [style*="repeat(3,1fr)"],
+  .mobile-layout [style*="repeat(3, 1fr)"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Tabela da semana: scroll horizontal */
+  .mobile-layout [style*="gridTemplateColumns"][style*="70px repeat(6"] {
+    min-width: 600px;
+  }
+}
