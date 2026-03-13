@@ -3,7 +3,7 @@ import { TOPICS, CYCLES } from '../data/academicData'
 import { DISC, fmtFull } from '../utils'
 
 const DISC_NAMES = { SO:'Sistemas Operacionais', DPE:'Desenv. Profissional', AMT:'Aprendizagem Mediada', ANT:'Antropologia' }
-const REVIEW_LABELS = { d1:'D+1', d3:'D+3', d7:'D+7', d30:'D+30' }
+const REVIEW_LABELS = { d1:'D+1', d3:'D+3', d30:'D+30' }
 
 function getTopicLabel(key) {
   // key format: "C2-SO-3-d7"
@@ -37,7 +37,7 @@ export default function Revisoes() {
   return (
     <div className="page-enter">
       <h1 style={{ fontSize:22, fontWeight:700, letterSpacing:'-0.02em', marginBottom:4 }}>Revisões</h1>
-      <p style={{ fontSize:12, color:'var(--text3)', marginBottom:20 }}>Sistema de repetição espaçada — D+1 · D+3 · D+7 · D+30</p>
+      <p style={{ fontSize:12, color:'var(--text3)', marginBottom:20 }}>Sistema de repetição espaçada — D+1 · D+3 · D+30</p>
 
       {/* Stats */}
       <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:10, marginBottom:20 }}>

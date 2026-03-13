@@ -29,30 +29,38 @@ export const useStore = create(
         return get().tasks.filter(t => t.date === today())
       },
 
-      // ── Pagamentos mensais ──────────────────────────────────────
-      payments: [],
+      // ── Atividades de estudo ────────────────────────────────────
+      activities: [],
 
-      addPayment(name) {
+      addActivity(title, description, subject) {
         const id = Date.now().toString()
-        set({ payments: [...get().payments, { id, name }] })
+        set({
+          activities: [...get().activities, {
+            id, title, description, subject, done: false,
+            createdAt: today(),
+          }]
+        })
       },
 
-      deletePayment(id) {
-        set({ payments: get().payments.filter(p => p.id !== id) })
+      toggleActivity(id) {
+        set({ activities: get().activities.map(a => a.id === id ? { ...a, done: !a.done } : a) })
       },
 
-      getActivePaymentReminders() {
-        const day = new Date().getDate()
-        if (day >= 1 && day <= 8) return get().payments
-        return []
+      deleteActivity(id) {
+        set({ activities: get().activities.filter(a => a.id !== id) })
       },
 
+      getPendingActivities() {
+        return get().activities.filter(a => !a.done)
+      },
+
+      // ── Revisões com repetição espaçada (D+1, D+3, D+30) ───────
       toggleStudied(key) {
         const s = get().studied
         if (s[key]) {
           const studied = { ...s }; delete studied[key]
           const reviews = { ...get().reviews }
-          ;[1,3,7,30].forEach(n => delete reviews[`${key}-d${n}`])
+          ;[1, 3, 30].forEach(n => delete reviews[`${key}-d${n}`])
           set({ studied, reviews })
         } else {
           const t = today()
@@ -60,18 +68,17 @@ export const useStore = create(
             studied: { ...s, [key]: t },
             reviews: {
               ...get().reviews,
-              [`${key}-d1`]:  { date: addDays(t,1),  done:false },
-              [`${key}-d3`]:  { date: addDays(t,3),  done:false },
-              [`${key}-d7`]:  { date: addDays(t,7),  done:false },
-              [`${key}-d30`]: { date: addDays(t,30), done:false },
+              [`${key}-d1`]:  { date: addDays(t, 1),  done: false },
+              [`${key}-d3`]:  { date: addDays(t, 3),  done: false },
+              [`${key}-d30`]: { date: addDays(t, 30), done: false },
             }
           })
         }
       },
 
-      markReview(key, hard=false) {
+      markReview(key, hard = false) {
         if (hard) {
-          set({ reviews: { ...get().reviews, [key]: { date: addDays(today(),1), done:false } } })
+          set({ reviews: { ...get().reviews, [key]: { date: addDays(today(), 1), done: false } } })
         } else {
           const reviews = { ...get().reviews }
           reviews[key] = { ...reviews[key], done: true }
@@ -86,16 +93,22 @@ export const useStore = create(
       getDueReviews() {
         const t = today()
         return Object.entries(get().reviews)
-          .filter(([,v]) => !v.done && v.date <= t)
-          .map(([k,v]) => ({ key:k, ...v }))
+          .filter(([, v]) => !v.done && v.date <= t)
+          .map(([k, v]) => ({ key: k, ...v }))
       },
 
       getMilestoneProgress(portId, total) {
         let done = 0
-        for (let i=0;i<total;i++) if (get().milestones[`${portId}-${i}`]) done++
-        return total ? Math.round(done/total*100) : 0
+        for (let i = 0; i < total; i++) if (get().milestones[`${portId}-${i}`]) done++
+        return total ? Math.round(done / total * 100) : 0
+      },
+
+      // ── Aviso de pagamento (sem cadastro, só lógica de data) ────
+      isPaymentPeriod() {
+        const day = new Date().getDate()
+        return day >= 1 && day <= 8
       },
     }),
-    { name: 'academico-plan-v1' }
+    { name: 'academico-plan-v2' }
   )
 )

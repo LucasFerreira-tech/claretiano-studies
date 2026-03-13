@@ -3,6 +3,7 @@ import { daysUntil, fmtFull, daysColor, currentCycle } from '../utils'
 import { DISC } from '../utils'
 import TarefasHoje from '../components/TarefasHoje'
 import AvisoPagamento from '../components/AvisoPagamento'
+import Atividades from '../components/Atividades'
 
 const cycle = currentCycle(CYCLES)
 
@@ -116,6 +117,11 @@ export default function Dashboard() {
       {/* Tarefas de Hoje */}
       <div style={{ marginTop:18 }}>
         <TarefasHoje />
+      </div>
+
+      {/* Atividades de Estudo */}
+      <div style={{ marginTop:18 }}>
+        <Atividades />
       </div>
     </div>
   )
