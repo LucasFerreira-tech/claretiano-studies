@@ -32,22 +32,56 @@ export const useStore = create(
       // ── Atividades de estudo ────────────────────────────────────
       activities: [],
 
-      addActivity(title, description, subject) {
+      addActivity(title, description, subject, cycle) {
         const id = Date.now().toString()
         set({
           activities: [...get().activities, {
-            id, title, description, subject, done: false,
-            createdAt: today(),
+            id, title, description, subject, cycle: cycle || null,
+            done: false, createdAt: today(),
           }]
         })
       },
 
       toggleActivity(id) {
+        const activity = get().activities.find(a => a.id === id)
+        if (!activity) return
+        const wasDone = activity.done
         set({ activities: get().activities.map(a => a.id === id ? { ...a, done: !a.done } : a) })
+
+        // Ao CONCLUIR: cria revisões automáticas baseadas na disciplina
+        if (!wasDone && activity.subject && activity.subject !== 'Geral') {
+          const t = today()
+          const discId = activity.subject
+          const reviewKey = `ativ-${id}`
+          const d1  = get()._nextClassDay(t, discId, 1)
+          const d3  = get()._nextClassDay(t, discId, 3)
+          const d30 = addDays(t, 30)
+          set({
+            reviews: {
+              ...get().reviews,
+              [`${reviewKey}-d1`]:  { date: d1,  done: false, label: activity.title },
+              [`${reviewKey}-d3`]:  { date: d3,  done: false, label: activity.title },
+              [`${reviewKey}-d30`]: { date: d30, done: false, label: activity.title },
+            }
+          })
+        }
+        // Ao DESMARCAR: remove as revisões
+        if (wasDone) {
+          const reviewKey = `ativ-${id}`
+          const reviews = { ...get().reviews }
+          ;[1, 3, 30].forEach(n => delete reviews[`${reviewKey}-d${n}`])
+          set({ reviews })
+        }
       },
 
       deleteActivity(id) {
-        set({ activities: get().activities.filter(a => a.id !== id) })
+        const reviewKey = `ativ-${id}`
+        const reviews = { ...get().reviews }
+        ;[1, 3, 30].forEach(n => delete reviews[`${reviewKey}-d${n}`])
+        set({
+          activities: get().activities.filter(a => a.id !== id),
+          reviews,
+        })
       },
 
       getPendingActivities() {

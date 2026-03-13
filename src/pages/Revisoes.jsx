@@ -47,7 +47,17 @@ function calcReviewDates(studyDate, discId) {
   }
 }
 
-function getTopicLabel(key) {
+function getTopicLabel(key, activities) {
+  // Atividades: "ativ-<id>-d1"
+  if (key.startsWith('ativ-')) {
+    const parts = key.split('-')
+    const suffix = parts[parts.length - 1]
+    const actId = parts.slice(1, parts.length - 1).join('-')
+    const act = activities?.find(a => a.id === actId)
+    const disc = act?.subject || 'ATI'
+    return { cycleId: act?.cycle || 'Atividade', discId: disc, suffix, topic: act?.title || 'Revisão de atividade' }
+  }
+  // Tópicos: "C2-SO-3-d1"
   const parts = key.split('-')
   const suffix  = parts[parts.length - 1]
   const idx     = parseInt(parts[parts.length - 2])
@@ -73,7 +83,7 @@ const CYCLE_REVIEWS_DEFAULT = [
 ]
 
 export default function Revisoes() {
-  const { reviews, markReview, studied } = useStore()
+  const { reviews, markReview, studied, activities } = useStore()
   const today = new Date().toISOString().split('T')[0]
 
   // Estado local para revisões de ciclo (permite editar datas e marcar done)
@@ -152,8 +162,8 @@ export default function Revisoes() {
       ) : (
         <div style={{ marginBottom:20 }}>
           {due.map(({ key }) => {
-            const { cycleId, discId, suffix, topic } = getTopicLabel(key)
-            const disc = DISC[discId]
+            const { cycleId, discId, suffix, topic } = getTopicLabel(key, activities)
+            const disc = DISC[discId] || { color:'#94a3b8', bg:'rgba(148,163,184,0.12)' }
             return (
               <div key={key} style={{ background:'var(--bg2)', border:'1px solid var(--border)', borderRadius:10, padding:'12px 14px', marginBottom:8, display:'flex', alignItems:'center', gap:12 }}>
                 <div style={{ width:36, height:36, borderRadius:8, background:disc?.bg, display:'flex', alignItems:'center', justifyContent:'center', fontSize:10, fontWeight:700, color:disc?.color, flexShrink:0 }}>
@@ -186,8 +196,8 @@ export default function Revisoes() {
       ) : (
         <div style={{ background:'var(--bg2)', border:'1px solid var(--border)', borderRadius:10, padding:'4px 14px', marginBottom:20 }}>
           {upcoming.map(({ key, date }, i) => {
-            const { cycleId, discId, suffix, topic } = getTopicLabel(key)
-            const disc = DISC[discId]
+            const { cycleId, discId, suffix, topic } = getTopicLabel(key, activities)
+            const disc = DISC[discId] || { color:'#94a3b8', bg:'rgba(148,163,184,0.12)' }
             return (
               <div key={key} style={{ display:'flex', alignItems:'center', gap:10, padding:'8px 0', borderBottom: i < upcoming.length - 1 ? '1px solid var(--border)' : 'none' }}>
                 <span style={{ fontSize:9, fontWeight:700, padding:'2px 6px', borderRadius:20, background:disc?.bg, color:disc?.color, minWidth:28, textAlign:'center', flexShrink:0 }}>{discId}</span>
