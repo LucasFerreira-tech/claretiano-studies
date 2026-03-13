@@ -7,8 +7,8 @@ export const DISC = {
 
 export function daysUntil(dateStr) {
   if (!dateStr) return null
-  const today = new Date(); today.setHours(0,0,0,0)
-  return Math.ceil((new Date(dateStr) - today) / 86400000)
+  const t = new Date(today()); t.setHours(0,0,0,0)
+  return Math.ceil((new Date(dateStr) - t) / 86400000)
 }
 
 export function fmt(dateStr) {
@@ -31,7 +31,12 @@ export function daysColor(days) {
   return '#34d399'
 }
 
+// ── Data simulada (apenas para testes) ──────────────────────
+// Defina window.__FAKE_TODAY = 'YYYY-MM-DD' para simular outra data
 export function today() {
+  if (typeof window !== 'undefined' && window.__FAKE_TODAY) {
+    return window.__FAKE_TODAY
+  }
   return new Date().toISOString().split('T')[0]
 }
 
