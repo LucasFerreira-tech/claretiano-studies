@@ -9,6 +9,44 @@ export const useStore = create(
       reviews:    {},
       milestones: {},
 
+      // ── Tarefas do dia ──────────────────────────────────────────
+      tasks: [],
+
+      addTask(title, date) {
+        const id = Date.now().toString()
+        set({ tasks: [...get().tasks, { id, title, date, done: false }] })
+      },
+
+      toggleTask(id) {
+        set({ tasks: get().tasks.map(t => t.id === id ? { ...t, done: !t.done } : t) })
+      },
+
+      deleteTask(id) {
+        set({ tasks: get().tasks.filter(t => t.id !== id) })
+      },
+
+      getTodayTasks() {
+        return get().tasks.filter(t => t.date === today())
+      },
+
+      // ── Pagamentos mensais ──────────────────────────────────────
+      payments: [],
+
+      addPayment(name) {
+        const id = Date.now().toString()
+        set({ payments: [...get().payments, { id, name }] })
+      },
+
+      deletePayment(id) {
+        set({ payments: get().payments.filter(p => p.id !== id) })
+      },
+
+      getActivePaymentReminders() {
+        const day = new Date().getDate()
+        if (day >= 1 && day <= 8) return get().payments
+        return []
+      },
+
       toggleStudied(key) {
         const s = get().studied
         if (s[key]) {

@@ -1,6 +1,8 @@
 import { CYCLES, PORTFOLIOS, EXAMS } from '../data/academicData'
-import { daysUntil, fmtFull, daysColor, isMensalidade, currentCycle } from '../utils'
+import { daysUntil, fmtFull, daysColor, currentCycle } from '../utils'
 import { DISC } from '../utils'
+import TarefasHoje from '../components/TarefasHoje'
+import AvisoPagamento from '../components/AvisoPagamento'
 
 const cycle = currentCycle(CYCLES)
 
@@ -13,7 +15,6 @@ const deadlines = [
 const discProgress = { SO:38, DPE:32, AMT:28, ANT:25 }
 
 export default function Dashboard() {
-  const mensalidade = isMensalidade()
 
   return (
     <div className="page-enter">
@@ -26,15 +27,9 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {mensalidade && (
-        <div style={{ background:'rgba(248,113,113,0.08)', border:'1px solid rgba(248,113,113,0.25)', borderRadius:10, padding:'10px 14px', marginBottom:18, display:'flex', gap:10, alignItems:'center' }}>
-          <span style={{ fontSize:18 }}>⚠</span>
-          <div>
-            <span style={{ fontWeight:600, color:'#f87171' }}>Mensalidade da Faculdade</span>
-            <span style={{ fontSize:12, color:'var(--text2)', marginLeft:8 }}>Vence nos primeiros 8 dias do mês</span>
-          </div>
-        </div>
-      )}
+      <div style={{ marginBottom:18 }}>
+        <AvisoPagamento />
+      </div>
 
       {/* Metrics */}
       <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:10, marginBottom:20 }}>
@@ -116,6 +111,11 @@ export default function Dashboard() {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Tarefas de Hoje */}
+      <div style={{ marginTop:18 }}>
+        <TarefasHoje />
       </div>
     </div>
   )
