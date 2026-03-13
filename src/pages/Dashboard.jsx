@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { CYCLES, PORTFOLIOS, EXAMS } from '../data/academicData'
 import { daysUntil, fmtFull, daysColor, currentCycle } from '../utils'
 import { DISC } from '../utils'
@@ -15,7 +16,19 @@ const deadlines = [
 
 const discProgress = { SO:38, DPE:32, AMT:28, ANT:25 }
 
+function useBrasiliaTime() {
+  const [now, setNow] = useState(new Date())
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 1000)
+    return () => clearInterval(t)
+  }, [])
+  const str = now.toLocaleString('pt-BR', { timeZone:'America/Sao_Paulo', weekday:'long', day:'2-digit', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit' })
+  // Capitaliza primeira letra
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
 export default function Dashboard() {
+  const datetime = useBrasiliaTime()
 
   return (
     <div className="page-enter">
@@ -25,6 +38,15 @@ export default function Dashboard() {
           <p style={{ fontSize:12, color:'var(--text3)', marginTop:3 }}>
             {cycle.label} — {fmtFull(cycle.start)} a {fmtFull(cycle.end)}
           </p>
+        </div>
+        <div style={{ textAlign:'right', flexShrink:0 }}>
+          <div style={{ fontSize:20, fontWeight:700, color:'var(--accent)', fontFamily:'var(--mono)', letterSpacing:'0.02em' }}>
+            {datetime.split(', ')[2]?.split(' às ')[1] || ''}
+          </div>
+          <div style={{ fontSize:11, color:'var(--text3)', marginTop:2 }}>
+            {datetime.split(', ')[0]}, {datetime.split(', ')[1]?.split(' às ')[0]}
+          </div>
+          <div style={{ fontSize:9, color:'var(--text3)', marginTop:1, opacity:0.6 }}>Horário de Brasília</div>
         </div>
       </div>
 
