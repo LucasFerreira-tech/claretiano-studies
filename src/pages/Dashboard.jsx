@@ -22,13 +22,14 @@ function useBrasiliaTime() {
     const t = setInterval(() => setNow(new Date()), 1000)
     return () => clearInterval(t)
   }, [])
-  const str = now.toLocaleString('pt-BR', { timeZone:'America/Sao_Paulo', weekday:'long', day:'2-digit', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit' })
-  // Capitaliza primeira letra
-  return str.charAt(0).toUpperCase() + str.slice(1)
+
+  const hora = now.toLocaleTimeString('pt-BR', { timeZone:'America/Sao_Paulo', hour:'2-digit', minute:'2-digit', second:'2-digit' })
+  const data = now.toLocaleDateString('pt-BR', { timeZone:'America/Sao_Paulo', weekday:'long', day:'2-digit', month:'long', year:'numeric' })
+  return { hora, data }
 }
 
 export default function Dashboard() {
-  const datetime = useBrasiliaTime()
+  const { hora, data } = useBrasiliaTime()
 
   return (
     <div className="page-enter">
@@ -40,11 +41,11 @@ export default function Dashboard() {
           </p>
         </div>
         <div style={{ textAlign:'right', flexShrink:0 }}>
-          <div style={{ fontSize:20, fontWeight:700, color:'var(--accent)', fontFamily:'var(--mono)', letterSpacing:'0.02em' }}>
-            {datetime.split(', ')[2]?.split(' às ')[1] || ''}
+          <div style={{ fontSize:22, fontWeight:700, color:'var(--accent)', fontFamily:'var(--mono)', letterSpacing:'0.04em' }}>
+            {hora}
           </div>
           <div style={{ fontSize:11, color:'var(--text3)', marginTop:2 }}>
-            {datetime.split(', ')[0]}, {datetime.split(', ')[1]?.split(' às ')[0]}
+            {data.charAt(0).toUpperCase() + data.slice(1)}
           </div>
           <div style={{ fontSize:9, color:'var(--text3)', marginTop:1, opacity:0.6 }}>Horário de Brasília</div>
         </div>
