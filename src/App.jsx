@@ -59,6 +59,11 @@ function NavItem({ to, icon, label }) {
 
 
 // ── Simulador de data (só para testes) ───────────────────────
+// Carrega do localStorage ao iniciar
+if (localStorage.getItem('__FAKE_TODAY')) {
+  window.__FAKE_TODAY = localStorage.getItem('__FAKE_TODAY')
+}
+
 function DateSimulator() {
   const realToday = new Date().toISOString().split('T')[0]
   const [open, setOpen] = useState(false)
@@ -67,8 +72,10 @@ function DateSimulator() {
   function apply(date) {
     if (date && date !== realToday) {
       window.__FAKE_TODAY = date
+      localStorage.setItem('__FAKE_TODAY', date)
     } else {
       delete window.__FAKE_TODAY
+      localStorage.removeItem('__FAKE_TODAY')
     }
     setFakeDate(date)
     window.location.reload()
