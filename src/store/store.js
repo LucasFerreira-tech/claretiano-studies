@@ -54,8 +54,32 @@ export const useStore = create(
         return get().activities.filter(a => !a.done)
       },
 
-      // ── Revisões com repetição espaçada (D+1, D+3, D+30) ───────
+      // ── Revisões com repetição espaçada baseada na grade semanal ─
+      // Dias de aula por matéria: 0=Dom,1=Seg,2=Ter,3=Qua,4=Qui,5=Sex,6=Sáb
+      _nextClassDay(fromDate, discId, nthDay = 1) {
+        const DISC_DAYS = {
+          SO:  [1, 2, 4, 5],
+          DPE: [1, 3, 4, 5],
+          AMT: [3],
+          ANT: [2],
+        }
+        const days = DISC_DAYS[discId] || [1, 2, 3, 4, 5]
+        let d = new Date(fromDate)
+        let count = 0
+        for (let i = 1; i <= 60; i++) {
+          d.setDate(d.getDate() + 1)
+          if (days.includes(d.getDay())) {
+            count++
+            if (count === nthDay) return d.toISOString().split('T')[0]
+          }
+        }
+        return addDays(fromDate, nthDay * 7)
+      },
+
       toggleStudied(key) {
+        // key format: "C2-SO-3"  → discId is second-to-last segment
+        const parts = key.split('-')
+        const discId = parts[parts.length - 2]
         const s = get().studied
         if (s[key]) {
           const studied = { ...s }; delete studied[key]
@@ -64,13 +88,16 @@ export const useStore = create(
           set({ studied, reviews })
         } else {
           const t = today()
+          const d1  = get()._nextClassDay(t, discId, 1)
+          const d3  = get()._nextClassDay(t, discId, 3)
+          const d30 = addDays(t, 30)
           set({
             studied: { ...s, [key]: t },
             reviews: {
               ...get().reviews,
-              [`${key}-d1`]:  { date: addDays(t, 1),  done: false },
-              [`${key}-d3`]:  { date: addDays(t, 3),  done: false },
-              [`${key}-d30`]: { date: addDays(t, 30), done: false },
+              [`${key}-d1`]:  { date: d1,  done: false },
+              [`${key}-d3`]:  { date: d3,  done: false },
+              [`${key}-d30`]: { date: d30, done: false },
             }
           })
         }
