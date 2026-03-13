@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route, NavLink } from 'react-router-dom'
+import { HashRouter, Routes, Route, NavLink, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import Dashboard from './pages/Dashboard'
 import Semana from './pages/Semana'
@@ -56,6 +56,7 @@ function NavItem({ to, icon, label }) {
     </NavLink>
   )
 }
+
 
 // ── Simulador de data (só para testes) ───────────────────────
 function DateSimulator() {
@@ -147,8 +148,8 @@ export default function App() {
             <Route path="/provas"     element={<Provas />} />
           </Routes>
         </div>
-        <DateSimulator />
       </div>
+    <DateSimulator />
     </HashRouter>
   )
 }
