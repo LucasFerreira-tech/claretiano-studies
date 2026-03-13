@@ -1,0 +1,222 @@
+{
+  "app": {
+    "name": "AcadêmicoPlan",
+    "version": "1.0.0",
+    "student": {
+      "course": "Tecnologia em Análise e Desenvolvimento de Sistemas",
+      "institution": "Claretiano",
+      "semester": "2026-1"
+    }
+  },
+
+  "disciplines": [
+    { "id": "SO",  "name": "Sistemas Operacionais",                 "hours": 90, "sessionsPerWeek": 3, "color": "#E6F1FB", "textColor": "#0C447C" },
+    { "id": "DPE", "name": "Desenvolvimento Profissional e Empreendedor", "hours": 90, "sessionsPerWeek": 3, "color": "#E1F5EE", "textColor": "#085041" },
+    { "id": "AMT", "name": "Aprendizagem Mediada por Tecnologia",   "hours": 30, "sessionsPerWeek": 1, "color": "#FBEAF0", "textColor": "#72243E" },
+    { "id": "ANT", "name": "Antropologia, Ética e Cultura",         "hours": 30, "sessionsPerWeek": 1, "color": "#FAEEDA", "textColor": "#633806" }
+  ],
+
+  "cycles": [
+    { "id": "C1", "start": "2026-02-02", "end": "2026-03-08", "status": "completed", "questionsDeadline": "2026-04-05" },
+    { "id": "C2", "start": "2026-03-09", "end": "2026-04-05", "status": "active",    "questionsDeadline": "2026-05-03" },
+    { "id": "C3", "start": "2026-04-06", "end": "2026-05-03", "status": "upcoming",  "questionsDeadline": "2026-05-31" },
+    { "id": "C4", "start": "2026-05-04", "end": "2026-05-31", "status": "upcoming",  "questionsDeadline": "2026-06-30" },
+    { "id": "C5", "start": "2026-06-01", "end": "2026-06-30", "status": "upcoming",  "questionsDeadline": null }
+  ],
+
+  "portfolios": [
+    {
+      "id": "PORT-ANT",
+      "discipline": "ANT",
+      "title": "Portfólio Antropologia",
+      "cycles": ["C2","C3"],
+      "periodStart": "2026-03-16",
+      "deadline": "2026-04-26",
+      "milestones": [
+        { "date": "2026-03-16", "task": "Rascunho e estrutura" },
+        { "date": "2026-03-24", "task": "Desenvolvimento" },
+        { "date": "2026-04-07", "task": "Revisão" },
+        { "date": "2026-04-14", "task": "Finalização" },
+        { "date": "2026-04-26", "task": "ENTREGA FINAL" }
+      ]
+    },
+    {
+      "id": "PORT-AMT",
+      "discipline": "AMT",
+      "title": "Portfólio AMT",
+      "cycles": ["C2","C3","C4"],
+      "periodStart": "2026-04-27",
+      "deadline": "2026-05-11",
+      "milestones": [
+        { "date": "2026-04-05", "task": "Rascunho Ciclo 2 (antecipado)" },
+        { "date": "2026-04-27", "task": "Início oficial — parte C3" },
+        { "date": "2026-05-04", "task": "Parte C4" },
+        { "date": "2026-05-11", "task": "ENTREGA FINAL" }
+      ]
+    },
+    {
+      "id": "PORT-DPE-1",
+      "discipline": "DPE",
+      "title": "DPE — Plano de Negócio",
+      "cycles": ["C2","C3"],
+      "periodStart": "2026-04-05",
+      "deadline": "2026-05-03",
+      "milestones": [
+        { "date": "2026-04-06", "task": "Estrutura do Canvas" },
+        { "date": "2026-04-13", "task": "Desenvolvimento" },
+        { "date": "2026-04-20", "task": "Revisão" },
+        { "date": "2026-05-03", "task": "ENTREGA FINAL" }
+      ]
+    },
+    {
+      "id": "PORT-DPE-2",
+      "discipline": "DPE",
+      "title": "DPE — Trabalho de Liderança",
+      "cycles": ["C4","C5"],
+      "periodStart": "2026-05-03",
+      "deadline": "2026-06-01",
+      "milestones": [
+        { "date": "2026-05-04", "task": "Conceitos de liderança" },
+        { "date": "2026-05-11", "task": "Desenvolvimento" },
+        { "date": "2026-05-25", "task": "Revisão" },
+        { "date": "2026-06-01", "task": "ENTREGA FINAL" }
+      ]
+    },
+    {
+      "id": "PORT-SO",
+      "discipline": "SO",
+      "title": "SO — Instalação Linux VM",
+      "cycles": ["C3","C4"],
+      "periodStart": "2026-04-05",
+      "deadline": "2026-05-17",
+      "milestones": [
+        { "date": "2026-04-06", "task": "Instalar VirtualBox + ISO Linux" },
+        { "date": "2026-04-13", "task": "Instalar Linux, configurar" },
+        { "date": "2026-04-20", "task": "Documentar processo" },
+        { "date": "2026-05-04", "task": "Revisão e finalização" },
+        { "date": "2026-05-17", "task": "ENTREGA FINAL" }
+      ]
+    }
+  ],
+
+  "exams": [
+    {
+      "id": "PROVA1",
+      "title": "Prova Específica 1",
+      "type": "online",
+      "availableFrom": "2026-05-16",
+      "deadline": "2026-05-24",
+      "duration": "60min por disciplina",
+      "cycles": ["C1","C2","C3","C4"],
+      "prepWeeks": [
+        { "week": "2026-04-27", "focus": "Revisão C1+C2+C3" },
+        { "week": "2026-05-04", "focus": "Revisão C4 + simulados" },
+        { "week": "2026-05-11", "focus": "Revisão final + questões" }
+      ]
+    },
+    {
+      "id": "PROVA2",
+      "title": "Prova Específica 2 + ASI",
+      "type": "presencial",
+      "date": "2026-06-13",
+      "time": "08:00",
+      "location": "Polo presencial",
+      "cycles": ["C1","C2","C3","C4","C5"],
+      "prepWeeks": [
+        { "week": "2026-06-01", "focus": "Revisão C1→C5 completa" },
+        { "week": "2026-06-08", "focus": "Revisão final + descanso véspera" }
+      ]
+    },
+    {
+      "id": "PROVA-INT",
+      "title": "Prova Integrada",
+      "type": "online",
+      "availableFrom": "2026-06-13",
+      "deadline": "2026-06-15",
+      "duration": "60min por disciplina",
+      "cycles": ["C1","C2","C3","C4","C5"]
+    }
+  ],
+
+  "cycleReviews": [
+    { "afterCycle": "C1", "reviewDate": "2026-03-09", "covers": ["C1"] },
+    { "afterCycle": "C2", "reviewDate": "2026-04-06", "covers": ["C1","C2"] },
+    { "afterCycle": "C3", "reviewDate": "2026-05-04", "covers": ["C1","C2","C3"] },
+    { "afterCycle": "C4", "reviewDate": "2026-06-01", "covers": ["C1","C2","C3","C4"] },
+    { "beforeExams": true, "reviewDate": "2026-06-07", "covers": ["C1","C2","C3","C4","C5"] }
+  ],
+
+  "spacedRepetition": {
+    "intervals": [1, 3, 7, 30],
+    "sessionDuration": 20,
+    "rule": "Ao estudar um tópico novo, agendar revisões em D+1, D+3, D+7, D+30 automaticamente"
+  },
+
+  "weeklySchedule": {
+    "studyDays": ["monday","tuesday","wednesday","thursday","friday","saturday"],
+    "slots": [
+      { "time": "07:50", "duration": 90, "type": "study", "label": "Matéria 1" },
+      { "time": "09:20", "duration": 20, "type": "break", "label": "Estudo bíblico" },
+      { "time": "09:40", "duration": 90, "type": "study", "label": "Matéria 2" },
+      { "time": "13:00", "duration": 150, "type": "programming", "label": "Estudo de Programação (cronograma próprio)" }
+    ],
+    "saturdaySlots": [
+      { "time": "morning", "type": "review", "label": "Revisão acumulada" },
+      { "time": "morning", "type": "portfolio", "label": "Portfólio ativo" },
+      { "time": "morning", "type": "questions", "label": "Questões online" }
+    ],
+    "dayMap": {
+      "monday":    { "slot1": "SO",  "slot2": "DPE" },
+      "tuesday":   { "slot1": "ANT", "slot2": "SO"  },
+      "wednesday": { "slot1": "DPE", "slot2": "AMT" },
+      "thursday":  { "slot1": "SO",  "slot2": "DPE" },
+      "friday":    { "slot1": "DPE", "slot2": "SO"  }
+    }
+  },
+
+  "specialEvents": [
+    {
+      "id": "EVT-ENTREVISTA",
+      "title": "Entrevista Jovem Aprendiz",
+      "date": "2026-03-17",
+      "type": "important",
+      "prepEvents": [
+        { "date": "2026-03-14", "title": "Prep: comunicação profissional + perguntas comuns" },
+        { "date": "2026-03-15", "title": "Prep: Excel básico + rotinas administrativas" },
+        { "date": "2026-03-16", "title": "Revisão final — simulação de entrevista" }
+      ]
+    },
+    {
+      "id": "EVT-PROG",
+      "title": "Estudo de Programação (cronograma próprio)",
+      "type": "recurring_daily",
+      "startDate": "2026-03-16",
+      "time": "13:00",
+      "duration": 150,
+      "days": ["monday","tuesday","wednesday","thursday","friday"]
+    }
+  ],
+
+  "recurringReminders": [
+    {
+      "id": "REM-MENSALIDADE",
+      "title": "Pagamento da Mensalidade da Faculdade",
+      "icon": "warning",
+      "recurrence": "monthly",
+      "dayStart": 1,
+      "dayEnd": 8,
+      "priority": "high",
+      "months": ["2026-03","2026-04","2026-05","2026-06","2026-07"]
+    }
+  ],
+
+  "jovenAprendiz": {
+    "interview": "2026-03-17",
+    "weeklyStudyBlocks": 2,
+    "topics": ["Excel","comunicação profissional","entrevistas de emprego","habilidades administrativas"],
+    "schedule": {
+      "tuesday": "Excel / comunicação profissional",
+      "thursday": "Entrevistas / habilidades administrativas"
+    }
+  }
+}
