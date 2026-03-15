@@ -29,6 +29,9 @@
   --sidebar: 220px;
 }
 
+/* Escala o app para parecer zoom 150% no zoom normal do navegador */
+html { zoom: 1.5; }
+
 html, body, #root { height: 100%; }
 body { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 14px; -webkit-font-smoothing: antialiased; }
 
