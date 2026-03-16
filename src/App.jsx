@@ -6,6 +6,9 @@ import Ciclos from './pages/Ciclos'
 import Portfolios from './pages/Portfolios'
 import Revisoes from './pages/Revisoes'
 import Provas from './pages/Provas'
+import SO from './pages/SO'
+import AMT from './pages/AMT'
+import ANT from './pages/ANT'
 
 const NAV = [
   { to: '/',           icon: '◈', label: 'Dashboard' },
@@ -14,6 +17,9 @@ const NAV = [
   { to: '/portfolios', icon: '▤', label: 'Portfólios' },
   { to: '/revisoes',   icon: '↻', label: 'Revisões' },
   { to: '/provas',     icon: '◆', label: 'Provas' },
+  { to: '/so',         icon: '⊞', label: 'Estudo SO' },
+  { to: '/amt',        icon: '⬡', label: 'Estudo AMT' },
+  { to: '/ant',        icon: '◉', label: 'Estudo ANT' },
 ]
 
 const S = {
@@ -153,6 +159,9 @@ export default function App() {
             <Route path="/portfolios" element={<Portfolios />} />
             <Route path="/revisoes"   element={<Revisoes />} />
             <Route path="/provas"     element={<Provas />} />
+            <Route path="/so"          element={<SO />} />
+            <Route path="/amt"         element={<AMT />} />
+            <Route path="/ant"         element={<ANT />} />
           </Routes>
         </div>
       </div>
